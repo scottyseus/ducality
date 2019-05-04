@@ -1,28 +1,7 @@
 import {RealmActionType} from './realm.actions';
-import {makeZone, cloneZone} from '../model/zoneFactory';
+import {makeZone, cloneZone, increaseLoyalty} from '../model/zoneFactory';
 
-
-
-const changeLoyalties = function(loyaltyMap, factionId, loyalty) {
-    let newLoyaltyMap = Object.assign({}, loyaltyMap);
-    let currentLoyaly = loyaltyMap[factionId];
-    let loyaltyDelta = loyalty - currentLoyaly;
-
-    newLoyaltyMap[factionId] = loyalty;
-
-    let otherDeltas = loyaltyDelta / (loyaltyMap.size() - 1);
-
-    Object.keys(newLoyaltyMap).forEach((key) => {
-        if(key === factionId) {
-            return;
-        }
-        
-    });
-
-    return newLoyaltyMap;
-}
-
-const realm = (state = [], action) => {
+const realm = (state = {}, action) => {
     switch(action.type) {
         case RealmActionType.ADD_ZONES:
             let zoneMap = {};
@@ -33,10 +12,11 @@ const realm = (state = [], action) => {
             // overwrites existing zones with zame IDs as
             // new zones
             return Object.assign({}, state, zoneMap);
-        case RealmActionType.SET_LOYALTY:
+        case RealmActionType.ADD_LOYALTY:
             let zone = state[action.id];
+            let newLoyaltyMap = increaseLoyalty(zone.loyaltyMap, action.factionId, action.amt);
             return Object.assign({}, state, {
-                [action.id]: cloneZone(zone, action.occupant)});
+                [action.id]: cloneZone(zone, newLoyaltyMap)});
         default:
             return state;
     }

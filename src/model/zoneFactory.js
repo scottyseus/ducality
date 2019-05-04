@@ -1,10 +1,9 @@
 let currentId = 0;
 
-export function makeZone(zoneSpec, loyaltyMap = {}) {
+export function makeZone(zoneSpec) {
     let id = currentId++;
     let newZone = Object.assign(zoneSpec, {
-        id,
-        loyaltyMap
+        id
     });
 
     return addMethods(newZone);
@@ -16,6 +15,12 @@ export function cloneZone(zone, loyaltyMap) {
     });
 
     return addMethods(newZone);
+}
+
+export function increaseLoyalty(loyaltyMap, factionId, delta) {
+    let newLoyaltyMap = Object.assign({}, loyaltyMap, 
+        {[factionId]: loyaltyMap[factionId] + delta});
+    return newLoyaltyMap;
 }
 
 const addMethods = function(zone) {
