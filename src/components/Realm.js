@@ -15,7 +15,7 @@ export default class Realm extends React.Component {
         this.gameCanvas.appendChild(this.app.view);
         this.grid.forEach((hex) => {
             const graphics = new PIXI.Graphics();
-            graphics.lineStyle(1, 0x000000);
+            graphics.lineStyle(3, 0xFFFFFF);
             graphics.beginFill(0x999999);
             const point = hex.toPoint();
             // add the hex's position to each of its corner points
