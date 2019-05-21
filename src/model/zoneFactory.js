@@ -1,10 +1,5 @@
-let currentId = 0;
-
 export function makeZone(zoneSpec) {
-    let id = currentId++;
-    let newZone = Object.assign(zoneSpec, {
-        id
-    });
+    let newZone = Object.assign({}, zoneSpec);
 
     return addMethods(newZone);
 }
@@ -32,14 +27,14 @@ const addMethods = function(zone) {
          * If multiple zones are tied, returns null.
          */
         getDominantFaction: () => {
-            let sortedLoyalties = zone.loyaltyMap.entries();
+            let sortedLoyalties = Object.entries(zone.loyaltyMap);
             sortedLoyalties.sort((a,b)  => {
                 if(a[1] < b[1]) {
-                    return -1;
+                    return 1;
                 } else if(a[1] === b[1]) {
                     return 0;
                 } else {
-                    return 1;
+                    return -1;
                 }
             });
             if(sortedLoyalties[0][1] === sortedLoyalties[1][1]) {

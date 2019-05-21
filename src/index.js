@@ -7,7 +7,7 @@ import * as serviceWorker from './serviceWorker';
 import { Provider } from 'react-redux'
 import {createStore} from 'redux';
 import ducalityState from './store/root.reducer';
-import {addZones, addLoyalty} from './store/realm.actions';
+import {setZones, addLoyalty} from './store/realm.actions';
 import ZoneSpec from './model/zoneSpec';
 
 // If you want your app to work offline and load faster, you can change
@@ -23,12 +23,17 @@ const unsubscribe = store.subscribe(() => {
 
 let zoneSpecs = [];
 
-let loyaltyMap = {1: 10, 2: 20, 3: 70};
-zoneSpecs.push(new ZoneSpec({type: "type A", location: "location1", loyaltyMap}));
+zoneSpecs.push([
+    new ZoneSpec({type: "type A", loyaltyMap: {1: 40, 2: 20, 3: 70}}),
+    new ZoneSpec({type: "type B", loyaltyMap: {1: 40, 2: 20, 3: 70}}),
+], [
+    new ZoneSpec({type: "type A", loyaltyMap: {1: 40, 2: 20, 3: 70}}),
+    new ZoneSpec({type: "type B", loyaltyMap: {1: 40, 2: 20, 3: 70}}),
+]);
 
-store.dispatch(addZones(zoneSpecs));
+store.dispatch(setZones(zoneSpecs));
 
-store.dispatch(addLoyalty(0, 1, 70));
+store.dispatch(addLoyalty({x: 0, y: 0}, 1, 70));
 
 unsubscribe();
 

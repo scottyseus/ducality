@@ -1,22 +1,36 @@
 import {RealmActionType} from './realm.actions';
 import {makeZone, cloneZone, increaseLoyalty} from '../model/zoneFactory';
+import {extendHex, defineGrid} from 'honeycomb-grid';
+import ZoneSpec from '../model/zoneSpec';
+
+const Hex = extendHex({
+    orientation: 'flat',
+    size: 20
+});
+const Grid = defineGrid(Hex);
 
 const realm = (state = {}, action) => {
     switch(action.type) {
-        case RealmActionType.ADD_ZONES:
-            let zoneMap = {};
-            action.zoneSpecs.forEach((zoneSpec) => {
-                let newZone = makeZone(zoneSpec);
-                zoneMap[newZone.id] = newZone;
+        case RealmActionType.SET_ZONES:
+            let zones = [];
+            action.zoneSpecs.forEach((zoneSpecRow, row) => {
+                zoneSpecRow.forEach((zoneSpec, col) => {
+                    let newZone = makeZone(zoneSpec);
+                    if(zones[row] === undefined) {
+                        zones[row] = [];
+                    }
+                    zones[row][col] = Hex(row,col, newZone);;
+                });
             });
-            // overwrites existing zones with zame IDs as
-            // new zones
-            return Object.assign({}, state, zoneMap);
+            
+            return Object.create(Grid(zones.flat()));
         case RealmActionType.ADD_LOYALTY:
-            let zone = state[action.id];
+            let newGrid = Object.create(state);
+            let zone = newGrid.get(action.location);
             let newLoyaltyMap = increaseLoyalty(zone.loyaltyMap, action.factionId, action.amt);
-            return Object.assign({}, state, {
-                [action.id]: cloneZone(zone, newLoyaltyMap)});
+            let newZone = cloneZone(new ZoneSpec(zone), newLoyaltyMap);
+            newGrid.set(action.location, Hex(action.location.x, action.location.y, newZone));
+            return newGrid;
         default:
             return state;
     }

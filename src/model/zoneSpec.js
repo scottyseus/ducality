@@ -5,9 +5,8 @@
  * @param {type, location} args 
  */
 export default function ZoneSpec(args) {
-    let {type, location, loyaltyMap} = args;
+    let {type, loyaltyMap} = args;
 
     this.type = type;
-    this.location = location;
     this.loyaltyMap = loyaltyMap;
 }
