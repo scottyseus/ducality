@@ -4,7 +4,7 @@ import {extendHex, defineGrid} from 'honeycomb-grid';
 import ZoneSpec from '../model/zoneSpec';
 
 const Hex = extendHex({
-    size: {height: 17, width: 15}
+    size: {height: 12, width: 14}
 });
 const Grid = defineGrid(Hex);
 

@@ -19,7 +19,7 @@ const typeToImageMap = {
 "water": water,
 };
 
-const offset = 7;
+const offset = 5;
 
 export default class Realm extends React.Component {
 
@@ -30,37 +30,55 @@ export default class Realm extends React.Component {
         this.gameCanvas = null;
     }
 
+    renderHitArea(hex) {
+        const graphics = new PIXI.Graphics();
+        graphics.lineStyle(1, 0x000000);
+        graphics.beginFill(0x999999);
+        const point = hex.toPoint();
+        // add the hex's position to each of its corner points
+        const corners = hex.corners().map(corner => corner.add(point));
+        // separate the first from the other corners
+        const [firstCorner, ...otherCorners] = corners;
+
+        // move the "pen" to the first corner
+        graphics.moveTo(firstCorner.x, firstCorner.y + offset);
+        // draw lines to the other corners
+        otherCorners.forEach(({ x, y }) => graphics.lineTo(x, y + offset));
+        // finish at the first corner
+        graphics.lineTo(firstCorner.x, firstCorner.y + offset);
+
+
+
+        this.app.stage.addChild(graphics);
+    }
+
     componentDidMount()  {
         this.app = new PIXI.Application({transparent: true});
         this.gameCanvas.appendChild(this.app.view);
         this.grid.forEach((hex) => {
-            console.log(typeToImageMap[hex.type]);
             const sprite = PIXI.Sprite.from(typeToImageMap[hex.type]);
             const point = hex.toPoint();
             // add the hex's position to each of its corner points
             const corners = hex.corners().map(corner => corner.add(point));
-            // separate the first from the other corners
-            const [firstCorner, ...otherCorners] = corners;
 
-            sprite.position.x = firstCorner.x;
-            sprite.position.y = firstCorner.y + offset;
+            sprite.position.x = point.x;
+            sprite.position.y = point.y;
 
             // set up the hit area
             sprite.interactive = true;
-            const points = corners.map((corner) => new PIXI.Point(corner.x, corner.y));
-            sprite.hitArea = new PIXI.Polygon(points);
+            // const points = corners.map((corner) => new PIXI.Point(corner.x, corner.y + offset));
+            // sprite.hitArea = new PIXI.Polygon(points);
 
-            // make sprite non-transparent when mouse is over it
             sprite.mouseover = function(mouseData) {
                 this.alpha = 0.5;
             }
-            
-            // make sprite half-transparent when mouse leaves
+
             sprite.mouseout = function(mouseData) {
                 this.alpha = 1;
             }
 
             this.app.stage.addChild(sprite);
+            //this.renderHitArea(hex);
         });
         this.app.start();
     }
