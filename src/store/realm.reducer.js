@@ -18,7 +18,7 @@ const realm = (state = {}, action) => {
                     if(zones[row] === undefined) {
                         zones[row] = [];
                     }
-                    zones[row][col] = Hex(row,col, newZone);;
+                    zones[row][col] = Hex(col,row, newZone);;
                 });
             });
             

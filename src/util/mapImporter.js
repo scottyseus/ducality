@@ -16,19 +16,30 @@ export default function MapImporter(args) {
         const width = map.layers[0].width;
         const height = map.layers[0].height;
 
-
+        let i = 0;
         let rows = [];
         let currRow = [];
         // Tiled places tiles in column-major
-        for(var col = 0; col < grid.length; col += height) {
-            currRow = [];
-            for(var row = 0; row < height; ++row) {
-                const tileType = grid[row + col];
-                const type = tileMap[tileType];
-                currRow.push(new ZoneSpec({type: type, loyaltyMap: {1: 0, 2: 0, 3: 0}}));
+        grid.forEach((el) => {
+            const tileType = el;
+            const type = tileMap[tileType];
+            currRow.push(new ZoneSpec({type: type, loyaltyMap: {1: 0, 2: 0, 3: 0}}));
+            ++i;
+            if(i === width) {
+                i = 0;
+                rows.push(currRow);
+                currRow = [];
             }
-            rows.push(currRow);
-        }
+        });
+        // for(var row = 0; row < grid.length; row += width) {
+        //     currRow = [];
+        //     for(var col = 0; col < width; ++col) {
+        //         const tileType = grid[row + col];
+        //         const type = tileMap[tileType];
+        //         currRow.push(new ZoneSpec({type: type, loyaltyMap: {1: 0, 2: 0, 3: 0}}));
+        //     }
+        //     rows.push(currRow);
+        // }
 
         return rows;
     }

@@ -34,18 +34,7 @@ export default class Realm extends React.Component {
         const graphics = new PIXI.Graphics();
         graphics.lineStyle(1, 0x000000);
         graphics.beginFill(0x999999);
-        const point = hex.toPoint();
-        // add the hex's position to each of its corner points
-        const corners = hex.corners().map(corner => corner.add(point));
-        // separate the first from the other corners
-        const [firstCorner, ...otherCorners] = corners;
-
-        // move the "pen" to the first corner
-        graphics.moveTo(firstCorner.x, firstCorner.y + offset);
-        // draw lines to the other corners
-        otherCorners.forEach(({ x, y }) => graphics.lineTo(x, y + offset));
-        // finish at the first corner
-        graphics.lineTo(firstCorner.x, firstCorner.y + offset);
+        graphics.drawPolygon(hex);
 
 
 
@@ -56,18 +45,17 @@ export default class Realm extends React.Component {
         this.app = new PIXI.Application({transparent: true});
         this.gameCanvas.appendChild(this.app.view);
         this.grid.forEach((hex) => {
-            const sprite = PIXI.Sprite.from(typeToImageMap[hex.type]);
-            const point = hex.toPoint();
+            let sprite = PIXI.Sprite.from(typeToImageMap[hex.type]);
+            let point = hex.toPoint();
             // add the hex's position to each of its corner points
-            const corners = hex.corners().map(corner => corner.add(point));
+            let corners = hex.corners().map(corner => corner.add(point));
 
             sprite.position.x = point.x;
             sprite.position.y = point.y;
 
             // set up the hit area
-            sprite.interactive = true;
-            // const points = corners.map((corner) => new PIXI.Point(corner.x, corner.y + offset));
-            // sprite.hitArea = new PIXI.Polygon(points);
+            let hitArea = new PIXI.Polygon(hex.corners().map(corner => new PIXI.Point(corner.x, corner.y + offset)));
+            sprite.hitArea = hitArea; // new PIXI.Rectangle(50, 50, 50, 50);
 
             sprite.mouseover = function(mouseData) {
                 this.alpha = 0.5;
@@ -76,9 +64,9 @@ export default class Realm extends React.Component {
             sprite.mouseout = function(mouseData) {
                 this.alpha = 1;
             }
-
+            sprite.interactive = true;
             this.app.stage.addChild(sprite);
-            //this.renderHitArea(hex);
+            // this.renderHitArea(hitArea);
         });
         this.app.start();
     }
