@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux'
-import realm from './realm.reducer';
-const ducalityState = combineReducers({
-    realm
+import match from './match.reducer';
+const root = combineReducers({
+    match
 });
 
-export default ducalityState;
+export default root;

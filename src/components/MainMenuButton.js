@@ -7,7 +7,7 @@ import '../App.css';
 const MainMenuButton = (props) => {
     return <Button variant="contained" color="primary">
           <Link className="MainMenuButton" to={props.link}>{props.linkText}</Link>
-        </Button>
+        </Button>;
 }
 
 export default MainMenuButton;

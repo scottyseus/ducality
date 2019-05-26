@@ -6,8 +6,14 @@ import MainMenuButton from './MainMenuButton';
 function MainMenu() {
   return (
       <Grid>
-        <MainMenuButton link="/play" linkText="Play"/>
+        <Grid>
+          <h1>Menu</h1>
+        </Grid>
+        <Grid>
+          <MainMenuButton link="/play" linkText="Play"/>
+        </Grid>
       </Grid>
+      
   );
 }
 
