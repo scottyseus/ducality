@@ -7,8 +7,6 @@ import './App.css';
 import MainMenu from './components/MainMenu';
 import RealmContainer from './containers/RealmContainer';
 
-import Play from './routes/Play';
-
 class App extends Component {
   render() {
     return (
