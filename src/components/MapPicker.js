@@ -16,8 +16,8 @@ const MapPicker = ({onMapSelected}) => {
     let mapCards = [];
     maps.forEach(map => {
         mapCards.push(
-        <Card>
-            <CardActionArea onClick={() => onMapSelected(map1)}>
+        <Card key="map1">
+            <CardActionArea style={{'&:focus':{border: "5px solid red"}}} onClick={() => onMapSelected(map1)}>
                 <CardContent>map1</CardContent>
             </CardActionArea>
         </Card>);
