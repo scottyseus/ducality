@@ -2,7 +2,7 @@ import ZoneSpec from '../model/zoneSpec';
 
 export default function MapImporter(args) {
 
-    this.loadMap = function(map) {
+    this.importMap = function(map) {
         const tiles = map.tilesets[0].tiles;
         const tileMap = {};
 

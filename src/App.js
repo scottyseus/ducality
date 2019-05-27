@@ -6,7 +6,7 @@ import './App.css';
 
 import MainMenu from './components/MainMenu';
 import RealmContainer from './containers/RealmContainer';
-import MapPicker from './components/MapPicker';
+import GameConfigurerContainer from './containers/GameConfigurerContainer';
 
 class App extends Component {
   render() {
@@ -15,7 +15,7 @@ class App extends Component {
         <HashRouter>
           <Route exact path="/" component={MainMenu}/>
           <Route exact path="/play/" component={RealmContainer}/>
-          <Route exact path="/maps/" component={MapPicker}/>
+          <Route exact path="/configure/" component={GameConfigurerContainer}/>
         </HashRouter>
       </div>
     );

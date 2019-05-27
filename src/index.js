@@ -23,9 +23,9 @@ const unsubscribe = store.subscribe(() => {
     console.log(store.getState());
 })
 
-let mapImporter = new MapImporter();
-let zoneSpecs = mapImporter.loadMap(map1);
-store.dispatch(setZones(zoneSpecs));
+// let mapImporter = new MapImporter();
+// let zoneSpecs = mapImporter.loadMap(map1);
+// store.dispatch(setZones(zoneSpecs));
 
 unsubscribe();
 

@@ -10,7 +10,7 @@ function MainMenu() {
           <h1>Menu</h1>
         </Grid>
         <Grid>
-          <MainMenuButton link="/play" linkText="Play"/>
+          <MainMenuButton link="/configure/" linkText="Play"/>
         </Grid>
       </Grid>
       
