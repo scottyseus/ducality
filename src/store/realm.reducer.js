@@ -26,7 +26,7 @@ const realm = (state = {}, action) => {
         case RealmActionType.ADD_LOYALTY:
             let newGrid = Object.create(state);
             let zone = newGrid.get(action.location);
-            let newLoyaltyMap = increaseLoyalty(zone.loyaltyMap, action.factionId, action.amt);
+            let newLoyaltyMap = increaseLoyalty(zone.loyaltyMap, action.zoneId, action.amt);
             let newZone = cloneZone(new ZoneSpec(zone), newLoyaltyMap);
             newGrid.set(action.location, Hex(action.location.x, action.location.y, newZone));
             return newGrid;

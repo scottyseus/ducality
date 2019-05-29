@@ -12,9 +12,9 @@ export function cloneZone(zone, loyaltyMap) {
     return addMethods(newZone);
 }
 
-export function increaseLoyalty(loyaltyMap, factionId, delta) {
+export function increaseLoyalty(loyaltyMap, playerId, delta) {
     let newLoyaltyMap = Object.assign({}, loyaltyMap, 
-        {[factionId]: loyaltyMap[factionId] + delta});
+        {[playerId]: loyaltyMap[playerId] + delta});
     return newLoyaltyMap;
 }
 

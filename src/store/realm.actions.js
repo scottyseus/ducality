@@ -3,10 +3,10 @@ export const setZones = (zoneSpecs) => ({
     zoneSpecs
 });
 
-export const addLoyalty = (location, factionId, amt) => ({
+export const addLoyalty = (location, playerId, amt) => ({
     type: RealmActionType.ADD_LOYALTY,
     location,
-    factionId,
+    playerId,
     amt
 });
 
