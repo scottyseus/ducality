@@ -30,17 +30,6 @@ export default class Realm extends React.Component {
         this.gameCanvas = null;
     }
 
-    renderHitArea(hex) {
-        const graphics = new PIXI.Graphics();
-        graphics.lineStyle(1, 0x000000);
-        graphics.beginFill(0x999999);
-        graphics.drawPolygon(hex);
-
-
-
-        this.app.stage.addChild(graphics);
-    }
-
     componentDidMount()  {
         this.app = new PIXI.Application({transparent: true});
         this.gameCanvas.appendChild(this.app.view);
@@ -66,7 +55,6 @@ export default class Realm extends React.Component {
             }
             sprite.interactive = true;
             this.app.stage.addChild(sprite);
-            // this.renderHitArea(hitArea);
         });
         this.app.start();
     }
